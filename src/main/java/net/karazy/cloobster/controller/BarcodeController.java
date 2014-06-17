@@ -212,7 +212,7 @@ public class BarcodeController {
 			attr.setValue(height);
 			child.addChild(attr);
 		}
-		String moduleWidth = bType;
+		String moduleWidth = bModuleWidth;
 		if (moduleWidth != null) {
 			attr = new DefaultConfiguration("module-width");
 			attr.setValue(moduleWidth);
