@@ -5,8 +5,8 @@
 	<artifactId>BarcodeService</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>BarcodeService Maven Webapp</name>
-	<url>http://maven.apache.org</url>
+	<name>BarcodeService</name>
+
 	<dependencies>
 		<dependency>
 			<groupId>net.sf.barcode4j</groupId>
@@ -30,11 +30,11 @@
 			<version>3.0</version>
 			<scope>provided</scope>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>javax.ws.rs</groupId> -->
-<!-- 			<artifactId>javax.ws.rs-api</artifactId> -->
-<!-- 			<version>2.0</version> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>javax.ws.rs</groupId> -->
+		<!-- <artifactId>javax.ws.rs-api</artifactId> -->
+		<!-- <version>2.0</version> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -46,7 +46,7 @@
 			<artifactId>avalon-framework-impl</artifactId>
 			<version>4.3.1</version>
 		</dependency>
-<!-- 		Logging -->
+		<!-- Logging -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -64,8 +64,23 @@
 		</dependency>
 	</dependencies>
 
+	<distributionManagement>
+		<repository>
+			<id>aws-ec2</id>
+			<url>scpexe://ec2-54-76-203-132.eu-west-1.compute.amazonaws.com:/home/ec2-user</url>
+		</repository>
+<!-- 		/var/lib/tomcat7/webapps -->
+	</distributionManagement>
+
 	<build>
 		<finalName>BarcodeService</finalName>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh-external</artifactId>
+				<version>2.6</version>
+			</extension>
+		</extensions>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
@@ -75,6 +90,16 @@
 					<!-- <url>http://www.mydomain.com:1234/mymanager</url> -->
 				</configuration>
 			</plugin>
+			
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+<!--                     <warName>spring-book</warName> -->
+                    <outputDirectory>test</outputDirectory>
+                </configuration>
+            </plugin>
 
 		</plugins>
 	</build>
