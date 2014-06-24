@@ -1,15 +1,15 @@
 package net.karazy.cloobster;
 
-import org.eclipse.jetty.server.Handler;
-//import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.ContextHandler;
-import org.eclipse.jetty.server.handler.HandlerList;
-import org.eclipse.jetty.server.handler.ResourceHandler;
+import static java.lang.Thread.currentThread;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import static java.lang.Thread.currentThread;
+
+//import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.ContextHandler;
+import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.webapp.WebAppContext;
 
 public class App {
 
@@ -24,6 +24,10 @@ public class App {
 //        HandlerList handlers = new HandlerList();
 //        handlers.setHandlers(new Handler[] {resources, context});
 //        server.setHandler(handlers);
+        
+        WebAppContext webapp = new WebAppContext();
+        webapp.setContextPath("/");
+        webapp.setWar("BarcodeService.war");
 
         server.start();
         server.join();
