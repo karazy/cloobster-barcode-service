@@ -14,8 +14,22 @@
 			<version>2.1</version>
 		</dependency>
 		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlet</artifactId>
+			<version>9.2.1.v20140609</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>9.2.1.v20140609</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<version>9.2.1.v20140609</version>
+		</dependency>
+		<dependency>
 			<groupId>org.glassfish.jersey.containers</groupId>
-			<!-- if your container implements Servlet API older than 3.0, use "jersey-container-servlet-core" -->
 			<artifactId>jersey-container-servlet</artifactId>
 			<version>2.9.1</version>
 		</dependency>
@@ -28,13 +42,13 @@
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.servlet</artifactId>
 			<version>3.0</version>
-			<scope>provided</scope>
+			<!-- <scope>provided</scope> -->
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>javax.ws.rs</groupId> -->
-		<!-- <artifactId>javax.ws.rs-api</artifactId> -->
-		<!-- <version>2.0</version> -->
-		<!-- </dependency> -->
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>2.0</version>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -64,12 +78,14 @@
 		</dependency>
 	</dependencies>
 
-<!-- 	<distributionManagement> -->
-<!-- 		<repository> -->
-<!-- 			<id>aws-ec2</id> -->
-<!-- 			<url>scpexe://54.76.228.227:/home/ec2-user</url> -->
-<!-- 		</repository> -->
-<!-- 	</distributionManagement> -->
+	<distributionManagement>
+		<repository>
+			<id>aws-ec2</id>
+			<url>scpexe://ec2-54-76-203-132.eu-west-1.compute.amazonaws.com:/home/ec2-user</url>
+		</repository>
+		<!-- /var/lib/tomcat7/webapps -->
+	</distributionManagement>
+
 
 	<build>
 		<!-- <finalName>BarcodeService</finalName> -->
@@ -81,15 +97,24 @@
 			</extension>
 		</extensions>
 		<plugins>
+			<!-- <plugin> -->
+			<!-- <groupId>org.apache.tomcat.maven</groupId> -->
+			<!-- <artifactId>tomcat7-maven-plugin</artifactId> -->
+			<!-- <version>2.2</version> -->
+			<!-- <configuration> -->
+			<!-- </configuration> -->
+			<!-- </plugin> -->
 			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.2.1.v20140609</version>
 				<configuration>
-					<!-- <url>http://www.mydomain.com:1234/mymanager</url> -->
+					<scanIntervalSeconds>5</scanIntervalSeconds>
+					<webAppConfig>
+						<contextPath>/${project.artifactId}</contextPath>
+					</webAppConfig>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -119,7 +144,29 @@
 					</execution>
 				</executions>
 			</plugin>
-
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>
