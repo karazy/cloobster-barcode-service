@@ -76,6 +76,11 @@ public class BarcodeController {
 			log.error("No barcode data provided.");
 			throw new BadRequestException("No data to encode provided!");
 		}
+		
+		if(!validateBarcodeData(data)) {
+			log.error("Barcode data invalid {}", data);
+			throw new BadRequestException("Invalid barcode data.");
+		}
 
 		if (!isBarcodeTypeValid(type)) {
 			log.error("{type} is an unsupported barcode type.");
@@ -286,6 +291,18 @@ public class BarcodeController {
 		}
 
 		return cfg;
+	}
+	
+	/**
+	 * 
+	 * @param data
+	 * @return
+	 * 		<code>true</code> if valid
+	 */
+	private boolean validateBarcodeData(String data) {
+		String validChars = "[a-zA-Z0-9]+";
+		return data.matches(validChars);
+	
 	}
 
 }

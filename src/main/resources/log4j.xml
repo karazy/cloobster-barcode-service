@@ -6,23 +6,35 @@
 	<appender name="console" class="org.apache.log4j.ConsoleAppender">
 		<param name="Target" value="System.out" />
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%-5p %c{1} - %m%n" />
+			<param name="ConversionPattern" value="%d %-5p %c{1} - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="BarcodeService" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="BarcodeService.log" />
+		<param name="MaxFileSize" value="10MB" />
+		<!-- Keep one backup file -->
+		<param name="MaxBackupIndex" value="5" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p %c{1} - %m%n" />
 		</layout>
 	</appender>
 
 	<logger name="net.karazy.cloobster">
 		<level value="debug" />
 		<appender-ref ref="console" />
+		<appender-ref ref="BarcodeService" />
 	</logger>
-	
+
 	<logger name="BarcodeService">
 		<level value="debug" />
 		<appender-ref ref="console" />
+		<appender-ref ref="BarcodeService" />
 	</logger>
 
-	<root>
-		<priority value="debug" />
-		<appender-ref ref="console" />
-	</root>
+	<!-- <root> -->
+	<!-- <priority value="debug" /> -->
+	<!-- <appender-ref ref="console" /> -->
+	<!-- </root> -->
 
 </log4j:configuration>

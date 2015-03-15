@@ -1,0 +1,4 @@
+INFO http-bio-8080-exec-1 net.karazy.cloobster.rest.BarcodeService - Got request to generate barcode from 0:0:0:0:0:0:0:1
+INFO http-bio-8080-exec-1 net.karazy.cloobster.controller.BarcodeController - Using type code39
+2014-06-24 21:58:49,914 INFO  BarcodeService - Got request to generate barcode from 0:0:0:0:0:0:0:1
+2014-06-24 21:58:49,926 INFO  BarcodeController - Using type code39
